@@ -1,24 +1,39 @@
-import React from 'react';
+import React,{useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Cart from './Cart';
 
 function App() {
+  const [count,setCount]=useState([]);
+  const [total , setTotal ] = useState(0)
+  const Increment=()=>{
+
+    setCount([...count,count.length>0?count[count.length-1]+1:1])
+
+    setTotal(total+1)
+  }
+  console.log(count);
+  const setNewTotal = ()=>{
+    setTotal(total+1)
+  }
+  const putNewTotal=()=>{
+    setTotal(total-1)
+  }
+  const updateTotal=(val)=>{
+setTotal(total+val)
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+       {count.map((e,index)=>{
+        //  console.log(e);
+      return <Cart key={e} updateTotal={updateTotal} setCount={setCount} count={count} id={e}/>
+    })}
+      <div>
+      <div className="count-cart">
+      <p >Total: {total}</p>
+      <button className="big-btn" onClick={Increment}>+</button>
+      </div>
+      </div>
     </div>
   );
 }
